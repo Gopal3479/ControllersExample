@@ -1,0 +1,47 @@
+﻿@using ControllersExample.Models;
+@{
+    String appTittle = "ASP.NET Sample Demo App";
+    List<Person> people = new List<Person>()
+    {
+        new Person(){Id=1234,Name="Gopal",DateOfBirth=DateTime.Parse("2001-10-21"),Gender=Gender.Male},
+        new Person(){Id=1235,Name="Likith",DateOfBirth=DateTime.Parse("2000-10-21"),Gender=Gender.Male},
+        new Person(){Id=1236,Name="Akhila",DateOfBirth=DateTime.Parse("2001-03-05"),Gender=Gender.Female}
+    };
+}
+@functions{
+    double? GetAge(DateTime? dateOfBirth)
+    {
+        if (dateOfBirth is not null)
+        {
+            return Math.Round((DateTime.Now - dateOfBirth.Value).TotalDays / 365);
+        }
+        else
+        {
+            return null;
+        }
+    }
+    string alertMessage = @"<script>alert('{people.Count} count')</script>";
+}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>@appTittle</title>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+    <h1>Welcome to this Webpage</h1>
+    @for(int i=0;i<3;i++)
+    {
+        Person person = people[i];
+        <div>@person.Id</div>
+        <div>@person.Name</div>
+        @*<div>@person.DateOfBirth</div>*@
+        @if(person.DateOfBirth !=null){
+            <span>@person.DateOfBirth.Value.ToString("MM/dd/yyyy")</span>
+            <span>@GetAge(person.DateOfBirth) years old </span>    
+        }
+        <div>@person.Gender</div>
+    };
+</body>
+</html>
